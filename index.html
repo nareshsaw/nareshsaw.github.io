@@ -20,7 +20,8 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#0D1117}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+@media (max-width:760px){html{scroll-padding-top:8px}}
 a{color:#E6EDF3;text-decoration:none}a:hover{color:#F0A23B}
 @keyframes gridmove{from{background-position:0 0}to{background-position:0 64px}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
@@ -105,6 +106,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset
 </style>
 <style>
 html{scroll-padding-top:80px}
+section[tabindex="-1"]:focus,footer[tabindex="-1"]:focus{outline:none}
 .no-sda .reveal{opacity:0;transform:perspective(900px) translateY(48px) rotateX(16deg);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
 .no-sda .reveal.in{opacity:1;transform:none}
 .no-sda .bar{transform:scaleX(0);transition:transform .8s ease .2s}
@@ -942,6 +944,41 @@ Resume (PDF)</a>
     document.documentElement.classList.add('js-spot');
     document.querySelectorAll('.case, .tile').forEach(function(el){
       el.addEventListener('mousemove', function(e){ var r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+    });
+  }
+  // Smooth inertia scrolling (mouse wheel + in-page links)
+  if (!reduce && window.matchMedia('(pointer: fine)').matches) {
+    var root = document.documentElement;
+    root.style.scrollBehavior = 'auto';
+    var target = window.scrollY, current = target, raf = 0, last = 0;
+    var maxY = function(){ return root.scrollHeight - window.innerHeight; };
+    var clamp = function(v){ return Math.max(0, Math.min(maxY(), v)); };
+    var loop = function(t){
+      var dt = last ? Math.min(64, t - last) : 16.7; last = t;
+      current += (target - current) * (1 - Math.pow(0.9, dt / 16.7));
+      if (Math.abs(target - current) < 0.5) { current = target; window.scrollTo(0, current); raf = 0; last = 0; return; }
+      window.scrollTo(0, current); raf = requestAnimationFrame(loop);
+    };
+    var go = function(y){ if (!raf) { current = window.scrollY; } target = clamp(y); if (!raf) raf = requestAnimationFrame(loop); };
+    window.addEventListener('wheel', function(e){
+      if (e.ctrlKey || e.defaultPrevented) return;
+      var box = e.target.closest && e.target.closest('.term-out');
+      if (box && box.scrollHeight > box.clientHeight) return;
+      e.preventDefault();
+      if (!raf) target = window.scrollY;
+      var d = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+      go(target + d);
+    }, { passive: false });
+    window.addEventListener('scroll', function(){ if (!raf) { target = current = window.scrollY; } }, { passive: true });
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+      var id = a.getAttribute('href'); var el = id === '#top' ? null : document.querySelector(id);
+      if (id !== '#top' && !el) return;
+      e.preventDefault();
+      var nav = document.querySelector('.topnav'); var off = nav && getComputedStyle(nav).position === 'sticky' ? nav.offsetHeight + 8 : 8;
+      go(el ? el.getBoundingClientRect().top + window.scrollY - off : 0);
+      if (history.replaceState) history.replaceState(null, '', id);
+      if (el && id !== '#top') { el.setAttribute('tabindex', '-1'); el.focus({ preventScroll: true }); }
     });
   }
   // Count-up on impact numbers
