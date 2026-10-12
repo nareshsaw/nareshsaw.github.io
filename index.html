@@ -927,7 +927,7 @@ Resume (PDF)</a>
   var colors = { cmd: '#F0A23B', out: '#A9B6C3', err: '#F2A08F' };
   function addLine(kind, text){ var d = document.createElement('div'); d.style.cssText = 'white-space:pre-wrap;line-height:1.55;color:' + colors[kind]; d.textContent = text; out.insertBefore(d, out.firstChild); }
   function run(raw){
-    var c = String(raw || '').trim().toLowerCase().replace(/s+/g, ' '); if (!c) return;
+    var c = String(raw || '').trim().toLowerCase().replace(/\s+/g, ' '); if (!c) return;
     if (c === 'clear') { out.innerHTML = ''; return; }
     var res = TERM[c] || (c.indexOf('sudo') === 0 ? ['Nice try. Only sudo hire-naresh works here.'] : ["command not found: " + c + ". Try 'help'."]);
     var kind = TERM[c] || c.indexOf('sudo') === 0 ? 'out' : 'err';
