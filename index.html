@@ -13,6 +13,8 @@
 <meta property="og:url" content="https://nareshsaw.github.io/">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#0D1117">
+<link rel="canonical" href="https://nareshsaw.github.io/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Naresh Saw","jobTitle":"Senior DevOps / Platform Engineer","url":"https://nareshsaw.github.io/","image":"https://nareshsaw.github.io/photo.jpg","email":"mailto:nareshsaw74@gmail.com","address":{"@type":"PostalAddress","addressLocality":"Bengaluru","addressCountry":"IN"},"sameAs":["https://github.com/nareshsaw","https://linkedin.com/in/nareshsaw2"],"knowsAbout":["AWS","Amazon EKS","Kubernetes","Karpenter","Terraform","DevSecOps","CI/CD","Open Policy Agent"]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230D1117'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='bold' fill='%23F0A23B' text-anchor='middle'%3ENS%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -70,13 +72,36 @@ a{color:#E6EDF3;text-decoration:none}a:hover{color:#F0A23B}
 .scrollhint{animation:scrollhint 1.8s ease-in-out infinite}
 .progress{transform:scaleX(0);transform-origin:left}
 .bar{transform-origin:left}
+@keyframes flow{0%{left:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes flowv{0%{top:0;opacity:0}15%{opacity:1}85%{opacity:1}100%{top:100%;opacity:0}}
+@keyframes lit{0%,100%{border-color:#2A3340;box-shadow:none}6%,14%{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc),0 0 28px rgba(240,162,59,.22)}22%{border-color:#2A3340;box-shadow:none}}
+@keyframes barfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.pipe{display:flex;align-items:stretch}
+.stage{flex:1 1 0;min-width:0;animation:lit 7.2s ease-in-out infinite}
+.s1{animation-delay:0s}.s2{animation-delay:1.2s}.s3{animation-delay:2.4s}.s4{animation-delay:3.6s}.s5{animation-delay:4.8s}.s6{animation-delay:6s}
+.conn{position:relative;flex:0 0 28px;align-self:center;height:2px;background:#2A3340}
+.conn::after{content:"";position:absolute;top:-3px;left:0;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);animation:flow 1.2s linear infinite}
+@media (max-width:900px){.pipe{flex-direction:column}.conn{flex:0 0 28px;width:2px;height:auto}.conn::after{left:-3px;top:0;margin-left:0;margin-top:-4px;animation-name:flowv}}
+.term-out{display:flex;flex-direction:column-reverse}
+.term-in{background:transparent;border:0;outline:0;color:#E6EDF3;font:inherit;flex:1;min-width:0;caret-color:var(--acc)}
+.term-in::placeholder{color:#6B7785}
+.cmdchip{cursor:pointer;background:transparent;font:inherit}
+.skip{position:absolute;left:-9999px;top:12px;z-index:30;background:var(--acc);color:#0D1117;padding:10px 16px;border-radius:6px;font-weight:600}
+.skip:focus{left:16px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+.term-line:focus-within{outline:2px solid var(--acc);outline-offset:-2px}
+.bfill{transform-origin:left}
+.fact{transition:border-color .3s ease,transform .3s ease}
+.fact:hover{border-color:#5A6878;transform:translateY(-3px)}
 @supports (animation-timeline: view()){
 .reveal{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
 .bar{animation:drawline linear both;animation-timeline:view();animation-range:entry 10% cover 35%}
 .progress{animation:grow linear both;animation-timeline:scroll(root)}
+.bfill{animation:barfill linear both;animation-timeline:view();animation-range:entry 20% cover 45%}
 }
 @media (max-width:760px){.cube-wrap{display:none}.topnav{position:relative!important}.idrow{margin-left:-20px!important;margin-right:0!important}.idrow>div:last-child{margin-left:20px}}
 @media (prefers-reduced-motion:reduce){.grid-floor,.floaty,.cube,.orbit,.orbit-rev,.caret,.pulse,.reveal,.marquee-track,.btn-primary::after,.tl-dot,.scrollhint,.bar{animation:none}.li,.row{animation:none;opacity:1}.tile:hover,.case:hover,.btn:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){.stage,.conn::after,.bfill{animation:none}}
 </style>
 <style>
 html{scroll-padding-top:80px}
@@ -84,11 +109,15 @@ html{scroll-padding-top:80px}
 .no-sda .reveal.in{opacity:1;transform:none}
 .no-sda .bar{transform:scaleX(0);transition:transform .8s ease .2s}
 .no-sda .bar.in{transform:scaleX(1)}
+.js-spot .case,.js-spot .tile{position:relative}
+.js-spot .case::before,.js-spot .tile::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s ease;background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),rgba(240,162,59,.10),transparent 45%)}
+.js-spot .case:hover::before,.js-spot .tile:hover::before{opacity:1}
 @media (prefers-reduced-motion:reduce){.no-sda .reveal,.no-sda .bar{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
-<div style="background: #0D1117; color: #E6EDF3; font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif; min-height: 100vh; overflow-x: clip">
+<div style="--acc: #F0A23B; background: #0D1117; color: #E6EDF3; font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif; min-height: 100vh; overflow-x: clip">
+<a class="skip" href="#impact">Skip to content</a>
 
 <div class="progress" style="position: fixed; top: 0; left: 0; right: 0; height: 3px; background: #F0A23B; z-index: 20"></div>
 
@@ -102,6 +131,7 @@ html{scroll-padding-top:80px}
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 26px; font-size: 15px; font-family: 'IBM Plex Mono', ui-monospace, monospace">
 <a class="navlink" href="#impact" style="padding: 10px 0">impact</a>
 <a class="navlink" href="#work" style="padding: 10px 0">work</a>
+<a class="navlink" href="#approach" style="padding: 10px 0">approach</a>
 <a class="navlink" href="#skills" style="padding: 10px 0">skills</a>
 <a class="navlink" href="#experience" style="padding: 10px 0">experience</a>
 <a class="navlink" href="https://github.com/nareshsaw" target="_blank" rel="noopener" style="padding: 10px 0">github</a>
@@ -130,7 +160,7 @@ html{scroll-padding-top:80px}
 </div>
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; padding: 8px 14px; border: 1px solid #2A3340; border-radius: 999px; background: rgba(13,17,23,.7); font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #C3CDD7"><span class="pulse" style="width: 8px; height: 8px; border-radius: 50%; background: #6FCF97"></span>Open to new roles · India &amp; EU</span>
-<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #8B98A5">Bengaluru, India</span>
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #8B98A5">Currently Senior Engineer – DevOps @ United Airlines · Bengaluru</span>
 </div>
 </div>
 
@@ -346,6 +376,21 @@ GitHub</a>
 <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EDF3; font-weight: 500">CI compute costs down 20–25%, with capacity that scales with build demand.</p>
 </div>
 </div>
+
+<div style="display: flex; flex-direction: column; gap: 14px; padding: 20px 22px; border: 1px dashed #2A3340; border-radius: 8px; background: #0D1117">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #8B98A5">CI COMPUTE COST · INDEXED TO 100 BEFORE ROLLOUT</span>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+<span style="flex: 0 0 150px; font-size: 14px; color: #A9B6C3">Before Karpenter</span>
+<div style="flex: 1 1 200px; height: 14px; background: #1A222C; border-radius: 7px; overflow: hidden"><div class="bfill" style="width: 100%; height: 100%; background: #5A6878; border-radius: 7px"></div></div>
+<span style="flex: 0 0 56px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; text-align: right">100</span>
+</div>
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+<span style="flex: 0 0 150px; font-size: 14px; color: #E6EDF3; font-weight: 500">After Karpenter</span>
+<div style="flex: 1 1 200px; height: 14px; background: #1A222C; border-radius: 7px; overflow: hidden"><div class="bfill" style="width: 77.5%; height: 100%; background: #F0A23B; border-radius: 7px"></div></div>
+<span style="flex: 0 0 56px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; text-align: right; color: #F0A23B">75–80</span>
+</div>
+</div>
+
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 
 <span class="chip" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; padding: 6px 12px; border: 1px solid #2A3340; border-radius: 999px; color: #A9B6C3">Karpenter</span>
@@ -380,6 +425,7 @@ GitHub</a>
 <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EDF3; font-weight: 500">95% of pipelines gated, 40%+ fewer code vulnerabilities, 97% IaC scan coverage, and every governance change auditable.</p>
 </div>
 </div>
+
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 
 <span class="chip" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; padding: 6px 12px; border: 1px solid #2A3340; border-radius: 999px; color: #A9B6C3">OPA / Rego</span>
@@ -416,6 +462,7 @@ GitHub</a>
 <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EDF3; font-weight: 500">About 20 hours of manual work saved per week.</p>
 </div>
 </div>
+
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 
 <span class="chip" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; padding: 6px 12px; border: 1px solid #2A3340; border-radius: 999px; color: #A9B6C3">MCP</span>
@@ -450,6 +497,7 @@ GitHub</a>
 <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E6EDF3; font-weight: 500">MTTR down 20% and monitoring reliability up 30%.</p>
 </div>
 </div>
+
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
 
 <span class="chip" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; padding: 6px 12px; border: 1px solid #2A3340; border-radius: 999px; color: #A9B6C3">Grafana</span>
@@ -468,10 +516,87 @@ GitHub</a>
 </section>
 
 
+<section id="approach" style="border-top: 1px solid #222B36; background: #10161D">
+<div style="max-width: 1160px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 40px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">03 / UNDER THE HOOD</p>
+<h2 style="margin: 0; font-size: 34px; font-weight: 700; letter-spacing: -0.01em">How I build platforms</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #A9B6C3; max-width: 680px">How a change moves through the CI/CD platform I govern: every stage automated, every check visible to the developer.</p>
+<span class="bar" style="width: 72px; height: 3px; background: #F0A23B; border-radius: 2px"></span>
+</div>
+<div class="reveal" style="border: 1px solid #222B36; border-radius: 12px; background: #0D1117; padding: 28px; display: flex; flex-direction: column; gap: 22px">
+<div class="pipe">
+<div class="stage s1" style="border: 1px solid #2A3340; border-radius: 10px; padding: 16px 14px; background: #131A22; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; color: #8B98A5">01 · COMMIT</span>
+<span style="font-size: 16px; font-weight: 600">Pull request</span>
+<span style="font-size: 14px; line-height: 1.45; color: #A9B6C3">GitHub branch protection and PR review</span>
+</div>
+<div class="conn" aria-hidden="true"></div>
+<div class="stage s2" style="border: 1px solid #2A3340; border-radius: 10px; padding: 16px 14px; background: #131A22; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; color: #8B98A5">02 · BUILD</span>
+<span style="font-size: 16px; font-weight: 600">CI pipeline</span>
+<span style="font-size: 14px; line-height: 1.45; color: #A9B6C3">Harness CI on EKS, Karpenter-scaled build nodes</span>
+</div>
+<div class="conn" aria-hidden="true"></div>
+<div class="stage s3" style="border: 1px solid #2A3340; border-radius: 10px; padding: 16px 14px; background: #131A22; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; color: #8B98A5">03 · SAST</span>
+<span style="font-size: 16px; font-weight: 600">Code scan</span>
+<span style="font-size: 14px; line-height: 1.45; color: #A9B6C3">Veracode security gate on 95% of pipelines</span>
+</div>
+<div class="conn" aria-hidden="true"></div>
+<div class="stage s4" style="border: 1px solid #2A3340; border-radius: 10px; padding: 16px 14px; background: #131A22; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; color: #8B98A5">04 · IaC</span>
+<span style="font-size: 16px; font-weight: 600">Infra scan</span>
+<span style="font-size: 14px; line-height: 1.45; color: #A9B6C3">Wiz on Terraform modules, 97% coverage</span>
+</div>
+<div class="conn" aria-hidden="true"></div>
+<div class="stage s5" style="border: 1px solid #2A3340; border-radius: 10px; padding: 16px 14px; background: #131A22; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; color: #8B98A5">05 · POLICY</span>
+<span style="font-size: 16px; font-weight: 600">Policy gate</span>
+<span style="font-size: 14px; line-height: 1.45; color: #A9B6C3">OPA rules enforce scan and pipeline standards</span>
+</div>
+<div class="conn" aria-hidden="true"></div>
+<div class="stage s6" style="border: 1px solid #2A3340; border-radius: 10px; padding: 16px 14px; background: #131A22; display: flex; flex-direction: column; gap: 8px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.06em; color: #8B98A5">06 · DEPLOY</span>
+<span style="font-size: 16px; font-weight: 600">Release</span>
+<span style="font-size: 14px; line-height: 1.45; color: #A9B6C3">Artifactory artifacts, Helm to Amazon EKS</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px 28px; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #8B98A5">
+<span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #F0A23B"></span>change flowing through the pipeline</span>
+<span>500+ pipelines · 50+ teams · fully auditable</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
+<div class="tile reveal" style="border: 1px solid #222B36; border-radius: 10px; padding: 26px; background: #0F151C; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #F0A23B">01</span>
+<span style="font-size: 18px; font-weight: 600">Guardrails, not gates</span>
+<span style="font-size: 15px; line-height: 1.6; color: #A9B6C3">Security checks run inside the pipeline with clear feedback, so teams stay fast and compliant by default.</span>
+</div>
+<div class="tile reveal" style="border: 1px solid #222B36; border-radius: 10px; padding: 26px; background: #0F151C; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #F0A23B">02</span>
+<span style="font-size: 18px; font-weight: 600">Additive, non-breaking change</span>
+<span style="font-size: 15px; line-height: 1.6; color: #A9B6C3">New enforcement rolls out alongside existing pipelines, with per-stage and branch-based conditions, so nothing breaks on day one.</span>
+</div>
+<div class="tile reveal" style="border: 1px solid #222B36; border-radius: 10px; padding: 26px; background: #0F151C; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #F0A23B">03</span>
+<span style="font-size: 18px; font-weight: 600">Cost is a feature</span>
+<span style="font-size: 15px; line-height: 1.6; color: #A9B6C3">Capacity should follow demand. Right-sizing CI with Karpenter cut compute cost by 20–25%.</span>
+</div>
+<div class="tile reveal" style="border: 1px solid #222B36; border-radius: 10px; padding: 26px; background: #0F151C; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #F0A23B">04</span>
+<span style="font-size: 18px; font-weight: 600">Automate the toil</span>
+<span style="font-size: 15px; line-height: 1.6; color: #A9B6C3">If a task repeats every week, it becomes a pipeline, a policy or an agent skill.</span>
+</div>
+</div>
+</div>
+</section>
+
+
 <section id="skills" style="border-top: 1px solid #222B36; background: #10161D">
 <div style="max-width: 1160px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 40px">
 <div class="reveal" style="display: flex; flex-direction: column; gap: 10px">
-<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">03 / TOOLKIT</p>
+<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">04 / TOOLKIT</p>
 <h2 style="margin: 0; font-size: 34px; font-weight: 700; letter-spacing: -0.01em">Skills</h2>
 <span class="bar" style="width: 72px; height: 3px; background: #F0A23B; border-radius: 2px"></span>
 </div>
@@ -634,7 +759,7 @@ GitHub</a>
 
 <section id="experience" style="max-width: 1160px; margin: 0 auto; padding: 96px 24px; display: flex; flex-direction: column; gap: 40px">
 <div class="reveal" style="display: flex; flex-direction: column; gap: 10px">
-<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">04 / EXPERIENCE</p>
+<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">05 / EXPERIENCE</p>
 <h2 style="margin: 0; font-size: 34px; font-weight: 700; letter-spacing: -0.01em">Where I've worked</h2>
 <span class="bar" style="width: 72px; height: 3px; background: #F0A23B; border-radius: 2px"></span>
 </div>
@@ -685,13 +810,75 @@ GitHub</a>
 </section>
 
 
+<section id="shell" style="border-top: 1px solid #222B36; background: #10161D">
+<div style="max-width: 1160px; margin: 0 auto; padding: 88px 24px; display: flex; flex-direction: column; gap: 28px">
+<div class="reveal" style="display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">06 / NARESH-SHELL</p>
+<h2 style="margin: 0; font-size: 34px; font-weight: 700; letter-spacing: -0.01em">Prefer the command line?</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #A9B6C3; max-width: 680px">Type a command, or tap one below.</p>
+<span class="bar" style="width: 72px; height: 3px; background: #F0A23B; border-radius: 2px"></span>
+</div>
+<div class="reveal" style="border: 1px solid #2A3340; border-radius: 12px; background: #0D1117; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 15px; box-shadow: 0 30px 60px rgba(0,0,0,.45); overflow: hidden">
+<div style="display: flex; align-items: center; gap: 8px; padding: 12px 18px; border-bottom: 1px solid #222B36; color: #8B98A5; font-size: 13px">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #3A4552"></span>
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #3A4552"></span>
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #3A4552"></span>
+<span style="margin-left: 8px">naresh@portfolio: ~</span>
+</div>
+<div class="term-out" aria-live="polite" style="height: 300px; overflow-y: auto; padding: 18px 20px; gap: 6px">
+
+<div style="white-space: pre-wrap; line-height: 1.55; color: #A9B6C3">Type 'help' to see what I can tell you.</div>
+
+<div style="white-space: pre-wrap; line-height: 1.55; color: #A9B6C3">Welcome to naresh-shell v1.0</div>
+
+</div>
+<div class="term-line" style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-top: 1px solid #222B36">
+<label for="term-in" style="color: #F0A23B; white-space: nowrap">naresh@portfolio:~$</label>
+<input id="term-in" class="term-in" type="text" autocomplete="off" spellcheck="false" placeholder="type help and press Enter">
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+
+<button type="button" class="cmdchip chip" data-cmd="help" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; padding: 10px 14px; border: 1px solid #2A3340; border-radius: 6px; color: #C3CDD7">help</button>
+
+<button type="button" class="cmdchip chip" data-cmd="whoami" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; padding: 10px 14px; border: 1px solid #2A3340; border-radius: 6px; color: #C3CDD7">whoami</button>
+
+<button type="button" class="cmdchip chip" data-cmd="skills" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; padding: 10px 14px; border: 1px solid #2A3340; border-radius: 6px; color: #C3CDD7">skills</button>
+
+<button type="button" class="cmdchip chip" data-cmd="impact" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; padding: 10px 14px; border: 1px solid #2A3340; border-radius: 6px; color: #C3CDD7">impact</button>
+
+<button type="button" class="cmdchip chip" data-cmd="experience" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; padding: 10px 14px; border: 1px solid #2A3340; border-radius: 6px; color: #C3CDD7">experience</button>
+
+<button type="button" class="cmdchip chip" data-cmd="contact" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; padding: 10px 14px; border: 1px solid #2A3340; border-radius: 6px; color: #C3CDD7">contact</button>
+
+<button type="button" class="cmdchip chip" data-cmd="sudo hire-naresh" style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; padding: 10px 14px; border: 1px solid #2A3340; border-radius: 6px; color: #C3CDD7">sudo hire-naresh</button>
+
+</div>
+</div>
+</section>
+
+
 <footer id="contact" style="border-top: 1px solid #222B36; background: #10161D; position: relative; overflow: hidden">
 <div style="position: absolute; inset: 0; perspective: 600px; pointer-events: none; opacity: .6">
 <div class="grid-floor"></div>
 </div>
 <div style="position: relative; z-index: 1; max-width: 1160px; margin: 0 auto; padding: 96px 24px 56px; display: flex; flex-direction: column; gap: 32px">
-<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">05 / CONTACT</p>
+<p style="margin: 0; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 14px; color: #F0A23B">07 / CONTACT</p>
 <h2 class="reveal" style="margin: 0; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; max-width: 760px">Hiring for platform, DevOps or SRE roles in India or the EU? Let's talk.</h2>
+<div class="reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 760px">
+<div class="fact" style="border: 1px solid #2A3340; border-radius: 8px; padding: 16px 18px; background: rgba(13,17,23,.7); display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #8B98A5">NOTICE PERIOD</span>
+<span style="font-size: 17px; font-weight: 600">1 month</span>
+</div>
+<div class="fact" style="border: 1px solid #2A3340; border-radius: 8px; padding: 16px 18px; background: rgba(13,17,23,.7); display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #8B98A5">BASED IN</span>
+<span style="font-size: 17px; font-weight: 600">Bengaluru, India</span>
+</div>
+<div class="fact" style="border: 1px solid #2A3340; border-radius: 8px; padding: 16px 18px; background: rgba(13,17,23,.7); display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; color: #8B98A5">OPEN TO</span>
+<span style="font-size: 17px; font-weight: 600">India · EU relocation</span>
+</div>
+</div>
 <div class="reveal" style="display: flex; flex-wrap: wrap; gap: 12px">
 <a class="btn btn-primary" href="mailto:nareshsaw74@gmail.com" style="background: #F0A23B; color: #0D1117; font-weight: 600; padding: 14px 22px; border-radius: 6px; font-size: 16px">nareshsaw74@gmail.com</a>
 <a class="btn btn-ghost" href="Naresh_Saw_Resume.pdf" target="_blank" rel="noopener" download="Naresh_Saw_Resume.pdf" style="border: 1px solid #3A4552; background: rgba(13,17,23,.7); padding: 14px 22px; border-radius: 6px; font-size: 16px; font-weight: 500; display: inline-flex; align-items: center; gap: 10px">
@@ -702,6 +889,7 @@ Resume (PDF)</a>
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 40px; margin-top: 24px; border-top: 1px solid #222B36; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 13px; color: #8B98A5">
 <span>© 2026 Naresh Saw</span>
+<a href="#top" style="color: #8B98A5">↑ Back to top</a>
 <span>Bengaluru, India · Open to relocation – EU</span>
 </div>
 </div>
@@ -732,6 +920,29 @@ Resume (PDF)</a>
     var bar = document.querySelector('.progress');
     var onScroll = function(){ var h = document.documentElement; var p = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight); bar.style.transform = 'scaleX(' + p + ')'; };
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  }
+  // naresh-shell
+  var TERM = {"help":["Available commands:","  whoami       who I am","  skills       core stack","  impact       numbers from production","  experience   where I have worked","  certs        certifications","  contact      how to reach me","  sudo hire-naresh","  clear        clear the screen"],"whoami":["Naresh Saw, Senior DevOps / Platform Engineer","Bengaluru, India · open to roles in India and the EU","7+ years on AWS, Kubernetes and CI/CD governance"],"skills":["cloud      AWS · EKS · Lambda · DynamoDB · IAM","k8s        Kubernetes · Karpenter · Helm · OpenShift","ci/cd      Harness · GitHub Actions · Jenkins · Argo CD","security   OPA · Wiz · Veracode · SonarQube","iac        Terraform · Harness IaCM","code       Python · Bash · Groovy"],"impact":["500+    pipelines under security guardrails","20      EKS clusters at 99.9% availability","20–25%  CI compute cost saved with Karpenter","95%     pipelines gated with Veracode SAST","97%     IaC scan coverage with Wiz","20 hrs  saved weekly with GenAI automation"],"experience":["2025 –     Senior Engineer – DevOps · United Airlines","2024–2025  DevOps Engineer · LTIMindtree","2019–2024  DevOps Engineer · CustomerXPs Software"],"certs":["✓ AWS Certified DevOps Engineer – Professional (2025)","… Certified Kubernetes Administrator (expected Dec 2026)"],"contact":["email     nareshsaw74@gmail.com","linkedin  linkedin.com/in/nareshsaw2","github    github.com/nareshsaw"],"sudo hire-naresh":["[sudo] password for recruiter: ********","Access granted ✓","Next step: email nareshsaw74@gmail.com"],"ls":["impact  work  approach  skills  experience  contact"]};
+  var out = document.querySelector('.term-out'), input = document.getElementById('term-in');
+  var colors = { cmd: '#F0A23B', out: '#A9B6C3', err: '#F2A08F' };
+  function addLine(kind, text){ var d = document.createElement('div'); d.style.cssText = 'white-space:pre-wrap;line-height:1.55;color:' + colors[kind]; d.textContent = text; out.insertBefore(d, out.firstChild); }
+  function run(raw){
+    var c = String(raw || '').trim().toLowerCase().replace(/s+/g, ' '); if (!c) return;
+    if (c === 'clear') { out.innerHTML = ''; return; }
+    var res = TERM[c] || (c.indexOf('sudo') === 0 ? ['Nice try. Only sudo hire-naresh works here.'] : ["command not found: " + c + ". Try 'help'."]);
+    var kind = TERM[c] || c.indexOf('sudo') === 0 ? 'out' : 'err';
+    addLine('cmd', '$ ' + c); res.forEach(function(t){ addLine(kind, t); });
+  }
+  if (out && input) {
+    input.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); run(input.value); input.value = ''; } });
+    document.querySelectorAll('[data-cmd]').forEach(function(b){ b.addEventListener('click', function(){ run(b.getAttribute('data-cmd')); }); });
+  }
+  // Spotlight hover on cards
+  if (!reduce && window.matchMedia('(hover: hover)').matches) {
+    document.documentElement.classList.add('js-spot');
+    document.querySelectorAll('.case, .tile').forEach(function(el){
+      el.addEventListener('mousemove', function(e){ var r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+    });
   }
   // Count-up on impact numbers
   if (!reduce) {
